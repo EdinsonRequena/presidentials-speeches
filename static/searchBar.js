@@ -1,16 +1,6 @@
 // import { presidentsData } from "./presidentsData";
 
-interface Speech {
-  title: string;
-  url: string;
-}
-
-interface President {
-  name: string;
-  speeches: Speech[];
-}
-
-export const presidentsData: President[] = [
+export const presidentsData = [
   {
     name: "George Washington",
     speeches: [
@@ -183,44 +173,39 @@ presidentsData.forEach(function (president) {
   tableBody?.appendChild(row);
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const tableBody = document.querySelector("#table-body") as HTMLElement;
-  const searchInput = document.querySelector(
-    "#search-input"
-  ) as HTMLInputElement;
+function updateTable(filter) {
+  tableBody.innerHTML = "";
 
-  function updateTable(filter: string): void {
-    tableBody.innerHTML = "";
+  presidentsData.forEach(function (president) {
+    if (
+      filter === "" ||
+      president.name.toLowerCase().includes(filter.toLowerCase())
+    ) {
+      var row = document.createElement("tr");
+      var nameCell = document.createElement("td");
+      nameCell.textContent = president.name;
+      row.appendChild(nameCell);
 
-    presidentsData.forEach((president) => {
-      if (
-        filter === "" ||
-        president.name.toLowerCase().includes(filter.toLowerCase())
-      ) {
-        const row = document.createElement("tr");
-        const nameCell = document.createElement("td");
-        nameCell.textContent = president.name;
-        row.appendChild(nameCell);
+      var speechesCell = document.createElement("td");
+      president.speeches.forEach(function (speech) {
+        var speechLink = document.createElement("a");
+        speechLink.textContent = speech.title;
+        speechLink.href = speech.url;
+        speechLink.target = "_blank";
+        speechesCell.appendChild(speechLink);
+        speechesCell.appendChild(document.createElement("br"));
+      });
+      row.appendChild(speechesCell);
 
-        const speechesCell = document.createElement("td");
-        president.speeches.forEach((speech) => {
-          const speechLink = document.createElement("a");
-          speechLink.textContent = speech.title;
-          speechLink.href = speech.url;
-          speechLink.target = "_blank";
-          speechesCell.appendChild(speechLink);
-          speechesCell.appendChild(document.createElement("br"));
-        });
-        row.appendChild(speechesCell);
-
-        tableBody.appendChild(row);
-      }
-    });
-  }
-
-  searchInput.addEventListener("input", () => {
-    updateTable(searchInput.value);
+      tableBody.appendChild(row);
+    }
   });
+}
 
-  updateTable("");
+var searchInput = document.querySelector("#search-input");
+searchInput.addEventListener("input", function () {
+  updateTable(searchInput.value);
 });
+
+// Carga inicial de la tabla
+updateTable("");

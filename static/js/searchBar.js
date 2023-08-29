@@ -1,14 +1,6 @@
-interface Speech {
-  title: string;
-  url: string;
-}
+// import { presidentsData } from "./presidentsData";
 
-interface President {
-  name: string;
-  speeches: Speech[];
-}
-
-export const presidentsData: President[] = [
+const presidentsData = [
   {
     name: "George Washington",
     speeches: [
@@ -158,3 +150,62 @@ export const presidentsData: President[] = [
     ],
   },
 ];
+
+const tableBody = document.querySelector("#table-body");
+
+presidentsData.forEach(function (president) {
+  var row = document.createElement("tr");
+  var nameCell = document.createElement("td");
+  nameCell.textContent = president.name;
+  row.appendChild(nameCell);
+
+  var speechesCell = document.createElement("td");
+  president.speeches.forEach(function (speech) {
+    var speechLink = document.createElement("a");
+    speechLink.textContent = speech.title;
+    speechLink.href = speech.url;
+    speechLink.target = "_blank";
+    speechesCell.appendChild(speechLink);
+    speechesCell.appendChild(document.createElement("br"));
+  });
+  row.appendChild(speechesCell);
+
+  tableBody?.appendChild(row);
+});
+
+function updateTable(filter) {
+  tableBody.innerHTML = "";
+
+  presidentsData.forEach(function (president) {
+    if (
+      filter === "" ||
+      president.name.toLowerCase().includes(filter.toLowerCase())
+    ) {
+      var row = document.createElement("tr");
+      var nameCell = document.createElement("td");
+      nameCell.textContent = president.name;
+      row.appendChild(nameCell);
+
+      var speechesCell = document.createElement("td");
+      president.speeches.forEach(function (speech) {
+        var speechLink = document.createElement("a");
+        speechLink.textContent = speech.title;
+        speechLink.href = speech.url;
+        speechLink.target = "_blank";
+        speechesCell.appendChild(speechLink);
+        speechesCell.appendChild(document.createElement("br"));
+      });
+      row.appendChild(speechesCell);
+
+      tableBody.appendChild(row);
+    }
+  });
+}
+
+var searchInput = document.querySelector("#search-input");
+searchInput.addEventListener("input", function () {
+  updateTable(searchInput.value);
+});
+
+// Carga inicial de la tabla
+updateTable("");
