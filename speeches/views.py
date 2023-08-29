@@ -14,6 +14,7 @@ def signup(request):
     form = UserCreationForm
 
     if request.method == 'POST':
+        print(request.method)
         form = UserCreationForm(request.POST)
 
         if form.is_valid():
@@ -23,6 +24,7 @@ def signup(request):
                     username=form.cleaned_data['username'],
                     password=form.cleaned_data['password1'],
                 )
+                print('siiiiu')
                 user.save()
                 login(request, user)
                 return redirect('home')
