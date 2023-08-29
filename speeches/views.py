@@ -38,16 +38,21 @@ def singout(request):
 
 
 def signin(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('/home')
-    else:
-        form = AuthenticationForm()
+    form = AuthenticationForm
+    try:
+        if request.method == 'POST':
+            form = AuthenticationForm(data=request.POST)
+
+            if form.is_valid():
+                user = authenticate(
+                    username=form.cleaned_data['username'],
+                    password=form.cleaned_data['password'],
+                )
+
+                if user is not None:
+                    login(request, user)
+                    return redirect('home')
+    except Exception as e:
+        print(e)
 
     return render(request, 'login.html', {'form': form})
