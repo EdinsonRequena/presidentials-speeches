@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='/login/')
 def home(request):
     return render(request, 'home.html')
 
@@ -17,7 +19,6 @@ def signup(request):
         if form.is_valid():
 
             try:
-                # form.save()
                 user = User.objects.create_user(
                     username=form.cleaned_data['username'],
                     password=form.cleaned_data['password1'],
