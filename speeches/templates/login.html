@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,29 +86,33 @@
         }
 
         .account-link {
+            color: #a59bce;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .account-link:hover {
             color: #c4a3e8;
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Sign Up</h1>
-        <form action="/home" method="post">
+        <h1>Login</h1>
+        <form action="/login/" method="post">
             {% csrf_token %}
             {% for field in form %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {{ field }}
-            {% if field.help_text %}
-            <small>{{ field.help_text }}</small>
-            {% endif %}
             {% for error in field.errors %}
             <p class="error-message">{{ error }}</p>
             {% endfor %}
             {% endfor %}
-            <button type="submit">Sign Up</button>
+            <button type="submit">Login</button>
         </form>
-        <p class="account-link">Already have an account? <a href="/login">Log in</a></p>
+        <p class="account-link">Don't have an account? <a href="/">Sign up</a></p>
     </div>
 </body>
 
