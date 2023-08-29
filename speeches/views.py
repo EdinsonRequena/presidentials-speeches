@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 
 
 def home(request):
@@ -35,3 +35,24 @@ def signup(request):
 def singout(request):
     logout(request)
     return redirect('/')
+
+
+def signin(request):
+    form = AuthenticationForm
+    try:
+        if request.method == 'POST':
+            form = AuthenticationForm(data=request.POST)
+
+            if form.is_valid():
+                user = authenticate(
+                    username=form.cleaned_data['username'],
+                    password=form.cleaned_data['password'],
+                )
+
+                if user is not None:
+                    login(request, user)
+                    return redirect('home')
+    except Exception as e:
+        print(e)
+
+    return render(request, 'login.html', {'form': form})
