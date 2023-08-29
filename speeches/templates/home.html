@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,6 +79,21 @@
         .logout-btn:hover {
             background-color: #634584;
         }
+
+        .search-bar {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 1px solid #543c72;
+            border-radius: 3px;
+            background-color: #291a42;
+            color: #fff;
+            width: 100%;
+            max-width: 300px;
+        }
     </style>
 
 </head>
@@ -84,6 +101,12 @@
 <body>
     <div class="container">
         <h1>Presidents' Speeches</h1>
+        <div class="search-bar">
+            <form id="search-form">
+                <input type="text" id="search-input" placeholder="Search for president..." class="search-input">
+            </form>
+        </div>
+
         <table>
             <thead>
                 <tr>
@@ -112,122 +135,7 @@
 
     </div>
 
-    <script>
-        var presidentsData = [
-            {
-                name: "George Washington",
-                speeches: [
-                    { title: "Inaugural Address", url: "#" },
-                    { title: "Farewell Address", url: "#" },
-                    { title: "Inaugural Address", url: "#" },
-                    { title: "Farewell Address", url: "#" },
-                    { title: "Inaugural Address", url: "#" },
-                    { title: "Farewell Address", url: "#" },
-                    { title: "Inaugural Address", url: "#" },
-                    { title: "Farewell Address", url: "#" }
-                ]
-            },
-            {
-                name: "Abraham Lincoln",
-                speeches: [
-                    { title: "Gettysburg Address", url: "#" },
-                    { title: "Second Inaugural Address", url: "#" }
-                ]
-            },
-            {
-                name: "George Washington",
-                speeches: [
-                    { title: "Inaugural Address", url: "#" },
-                    { title: "Farewell Address", url: "#" }
-                ]
-            },
-            {
-                name: "Abraham Lincoln",
-                speeches: [
-                    { title: "Gettysburg Address", url: "#" },
-                    { title: "Second Inaugural Address", url: "#" }
-                ]
-            },
-            {
-                name: "George Washington",
-                speeches: [
-                    { title: "Inaugural Address", url: "#" },
-                    { title: "Farewell Address", url: "#" }
-                ]
-            },
-            {
-                name: "Abraham Lincoln",
-                speeches: [
-                    { title: "Gettysburg Address", url: "#" },
-                    { title: "Second Inaugural Address", url: "#" }
-                ]
-            },
-            {
-                name: "George Washington",
-                speeches: [
-                    { title: "Inaugural Address", url: "#" },
-                    { title: "Farewell Address", url: "#" }
-                ]
-            },
-            {
-                name: "Abraham Lincoln",
-                speeches: [
-                    { title: "Gettysburg Address", url: "#" },
-                    { title: "Second Inaugural Address", url: "#" }
-                ]
-            },
-            {
-                name: "George Washington",
-                speeches: [
-                    { title: "Inaugural Address", url: "#" },
-                    { title: "Farewell Address", url: "#" }
-                ]
-            },
-            {
-                name: "Abraham Lincoln",
-                speeches: [
-                    { title: "Gettysburg Address", url: "#" },
-                    { title: "Second Inaugural Address", url: "#" }
-                ]
-            },
-            {
-                name: "George Washington",
-                speeches: [
-                    { title: "Inaugural Address", url: "#" },
-                    { title: "Farewell Address", url: "#" }
-                ]
-            },
-            {
-                name: "Abraham Lincoln",
-                speeches: [
-                    { title: "Gettysburg Address", url: "#" },
-                    { title: "Second Inaugural Address", url: "#" }
-                ]
-            }
-        ];
-
-        var tableBody = document.querySelector('#table-body');
-
-        presidentsData.forEach(function (president) {
-            var row = document.createElement('tr');
-            var nameCell = document.createElement('td');
-            nameCell.textContent = president.name;
-            row.appendChild(nameCell);
-
-            var speechesCell = document.createElement('td');
-            president.speeches.forEach(function (speech) {
-                var speechLink = document.createElement('a');
-                speechLink.textContent = speech.title;
-                speechLink.href = speech.url;
-                speechLink.target = "_blank";
-                speechesCell.appendChild(speechLink);
-                speechesCell.appendChild(document.createElement('br'));
-            });
-            row.appendChild(speechesCell);
-
-            tableBody.appendChild(row);
-        });
-    </script>
+    <script src="{% static 'ts/searchBar.ts' %}"></script>
 </body>
 
 </html>
