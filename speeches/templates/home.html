@@ -153,25 +153,7 @@
         var tableBody = document.querySelector("#table-body");
         var presidents = JSON.parse('{{ presidents | safe }}');
 
-        // function generateRow(president) {
-        //     var row = document.createElement("tr");
-        //     var nameCell = document.createElement("td");
-        //     nameCell.textContent = president.name;
-        //     row.appendChild(nameCell);
-
-        //     var speechesCell = document.createElement("td");
-        //     president.speeches.forEach(function (speech) {
-        //         var speechLink = document.createElement("a");
-        //         speechLink.textContent = speech;
-        //         speechLink.href = speech;
-        //         speechLink.target = "_blank";
-        //         speechesCell.appendChild(speechLink);
-        //         speechesCell.appendChild(document.createElement("br"));
-        //     });
-        //     row.appendChild(speechesCell);
-
-        //     return row;
-        // }
+        console.log(presidents);
 
         function updateTable(filter) {
             tableBody.innerHTML = "";
