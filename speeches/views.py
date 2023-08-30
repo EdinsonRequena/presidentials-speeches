@@ -16,14 +16,13 @@ def home(request):
                             'presidential_speeches.csv')
     with open(csv_path, 'r', newline='', encoding='utf-8') as csvfile:
         csv_reader = csv.reader(csvfile)
-        next(csv_reader)  # Saltar la primera fila (encabezados)
+        next(csv_reader)
         for row in csv_reader:
             name = row[0]
             speeches_str = row[1]
             speeches_list = json.loads(speeches_str.replace("'", '"'))
             presidential_data.append({"name": name, "speeches": speeches_list})
 
-    # Obtener valor de búsqueda de la URL
     search_query = request.GET.get('search', '')
 
     filtered_presidents = []
