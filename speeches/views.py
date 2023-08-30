@@ -20,10 +20,18 @@ def home(request):
         for row in csv_reader:
             name = row[0]
             speeches_str = row[1]
-            speeches_list = json.loads(speeches_str.replace("'", "\""))
+            speeches_list = json.loads(speeches_str.replace("'", '"'))
             presidential_data.append({"name": name, "speeches": speeches_list})
 
-    context = {'presidents': presidential_data}
+    # Obtener valor de búsqueda de la URL
+    search_query = request.GET.get('search', '')
+
+    filtered_presidents = []
+    for president in presidential_data:
+        if search_query.lower() in president['name'].lower():
+            filtered_presidents.append(president)
+
+    context = {'presidents': filtered_presidents, 'search_query': search_query}
     return render(request, 'home.html', context)
 
 

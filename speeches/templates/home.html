@@ -119,7 +119,9 @@
         <h1>Presidents' Speeches</h1>
         <div class="search-bar">
             <form id="search-form">
-                <input type="text" id="search-input" placeholder="Search for president..." class="search-input">
+                <input type="text" id="search-input" name="search" value="{{ search_query }}"
+                    placeholder="Search for president..." class="search-input">
+                <button type="submit">Search</button>
             </form>
         </div>
 
@@ -150,45 +152,44 @@
     </div>
 
     <script>
-        var tableBody = document.querySelector("#table-body");
-        var presidents = JSON.parse('{{ presidents | safe }}');
+        // TODO: Implementar la funcionalidad de búsqueda en JS para que la busqueda sea dinamica, actualmente la barra de busqueda funciona de manera no dinamica
 
-        console.log(presidents);
+        // var tableBody = document.querySelector("#table-body");
+        // var presidents = JSON.parse('{{ presidents | safe }}');
 
-        function updateTable(filter) {
-            tableBody.innerHTML = "";
+        // function searchBar(filter) {
+        //     tableBody.innerHTML = "";
 
-            presidents.forEach(function (president) {
-                if (
-                    filter === "" ||
-                    president.name.toLowerCase().includes(filter.toLowerCase())
-                ) {
-                    var row = document.createElement("tr");
-                    var nameCell = document.createElement("td");
-                    nameCell.textContent = president.name;
-                    row.appendChild(nameCell);
+        //     presidents.forEach(function (president) {
+        //         if (
+        //             filter === "" ||
+        //             president.name.toLowerCase().includes(filter.toLowerCase())
+        //         ) {
+        //             var row = document.createElement("tr");
+        //             var nameCell = document.createElement("td");
+        //             nameCell.textContent = president.name;
+        //             row.appendChild(nameCell);
 
-                    var speechesCell = document.createElement("td");
-                    speechesCell.classList.add("speech-list"); // Agregamos la clase 'speech-list' al elemento td
-                    president.speeches.forEach(function (speech) {
-                        var speechLink = document.createElement("a");
-                        speechLink.textContent = speech.title;
-                        speechLink.href = speech.url;
-                        speechLink.target = "_blank";
-                        speechesCell.appendChild(speechLink);
-                        speechesCell.appendChild(document.createElement("br"));
-                    });
-                    row.appendChild(speechesCell);
+        //             var speechesCell = document.createElement("td");
+        //             president.speeches.forEach(function (speech) {
+        //                 var speechLink = document.createElement("a");
+        //                 speechLink.textContent = speech.title;
+        //                 speechLink.href = speech.url;
+        //                 speechLink.target = "_blank";
+        //                 speechesCell.appendChild(speechLink);
+        //                 speechesCell.appendChild(document.createElement("br"));
+        //             });
+        //             row.appendChild(speechesCell);
 
-                    tableBody.appendChild(row);
-                }
-            });
-        }
+        //             tableBody.appendChild(row);
+        //         }
+        //     });
+        // }
 
-        var searchInput = document.querySelector("#search-input");
-        searchInput.addEventListener("input", function () {
-            updateTable(searchInput.value);
-        });
+        // var searchInput = document.querySelector("#search-input");
+        // searchInput.addEventListener("input", function () {
+        //     searchBar(searchInput.value);
+        // });
     </script>
 </body>
 
