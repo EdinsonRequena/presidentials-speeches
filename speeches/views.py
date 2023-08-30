@@ -1,3 +1,7 @@
+import csv
+import json
+import os
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -7,7 +11,20 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/login/')
 def home(request):
-    return render(request, 'home.html')
+    presidential_data = []
+    csv_path = os.path.join('static', 'presidential_data',
+                            'presidential_speeches.csv')
+    with open(csv_path, 'r', newline='', encoding='utf-8') as csvfile:
+        csv_reader = csv.reader(csvfile)
+        next(csv_reader)  # Saltar la primera fila (encabezados)
+        for row in csv_reader:
+            name = row[0]
+            speeches_str = row[1]
+            speeches_list = json.loads(speeches_str.replace("'", "\""))
+            presidential_data.append({"name": name, "speeches": speeches_list})
+
+    context = {'presidents': presidential_data}
+    return render(request, 'home.html', context)
 
 
 def signup(request):
